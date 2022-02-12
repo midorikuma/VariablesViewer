@@ -1,6 +1,6 @@
 //https://github.com/midorikuma/VariablesViewer
 
-//in(vec4 col) -> out(vec4 v,int type)
+//in(vec4 col) -> out(vec4 vs,int type)
 int ax = int(col.g);
 int ay = int(col.b);
 switch(int(col.r)) {
