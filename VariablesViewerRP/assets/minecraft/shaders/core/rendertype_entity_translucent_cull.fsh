@@ -47,7 +47,7 @@ void main() {
             //Display
             int type;
             vec4 vs;
-            //in(vec4 col) -> out(vec4 v,int type)
+            //in(vec4 col) -> out(vec4 vs,int type)
             #moj_import <values.glsl>
             if(type < 200) {
                 //Character
