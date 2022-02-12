@@ -32,8 +32,8 @@ which are commented out at the bottom of `VariablesViewerRP\assets\minecraft\sha
 
 \*`(Variable Name)` needs to be an array number depending on the type of variable.  
 Example:  
--`vec3` :`Variable Name[col.g]`  
--`mat4` :`Variable Name[col.b][col.g]`  
+-`vec3` :`Variable Name[ax]`  
+-`mat4` :`Variable Name[ay][ax]`  
 Also, make sure that the variables you want to display have already been declared in the json or fsh file.  
   
 Finally, use F3+T to reload the resource pack to change the display.
