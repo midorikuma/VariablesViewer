@@ -3,7 +3,7 @@
 //Load color data
 vec4 load_color(sampler2D Sampler0, vec2 texCoord0, vec2 pos) {
     vec2 texsize = textureSize(Sampler0, 0);
-    vec2 tpos = floor(texCoord0 * 1024.0 / 64.0) * 64.0 + mod(texCoord0 * texsize, 64.0) / 64.0 + pos;
+    vec2 tpos = floor(texCoord0 * texsize / 64.0) * 64.0 + mod(texCoord0 * texsize, 64.0) / 64.0 + pos;
     return texture(Sampler0, tpos / texsize) * 255.0;
 }
 
