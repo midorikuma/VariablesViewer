@@ -24,7 +24,7 @@ Four core shader objects are available to view variables by default.
 ・pig mob  
 ・customized carrot_on_a_stick  
 ・block of wraped_planks  
-The command `get.mcfunction` can be used to obtain or summon an object.  
+The commands `get.mcfunction` can be used to obtain or summon an object.  
 
 
 # Advanced Settings
@@ -39,7 +39,7 @@ Variable Viewer can display characters up to 8-256 characters in height and widt
 To change the display, edit `display.txt` and `values.glsl`.  
 This section will show you how to add variables to be displayed.  
   
-### display.txt
+### ・display.txt
 The display is made roughly based on `display.txt`.  
 The notations are as follows  
 `[xPos,Text,Variable identification number,xSize,ySize]`  
