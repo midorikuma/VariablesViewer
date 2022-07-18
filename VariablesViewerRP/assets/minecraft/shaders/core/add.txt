@@ -1,11 +1,5 @@
-{
-  "blend": {
-    "func": "add",
-    "srcrgb": "srcalpha",
-    "dstrgb": "1-srcalpha"
-  },
-  "vertex": "rendertype_entity_translucent_cull",
-  "fragment": "rendertype_entity_translucent_cull",
+-JSON-
+--Rewrite attributes,samplers and uniforms--
     "attributes": [
         "Position",
         "Color",
@@ -36,4 +30,31 @@
         { "name": "GameTime", "type": "float", "count": 1, "values": [ 1.0 ] },
         { "name": "ChunkOffset", "type": "float", "count": 3, "values": [ 0.0, 0.0, 0.0 ] }
     ]
-}
+
+-VSH-
+--Remove all declared variables (uniform,in,out)--
+--Add before main in vsh--
+#define VSH
+---Option settings (or without)---
+#define PID [0-n(Fixed Display Planes ID (If without, display off))]
+#define VDRn [0-n(Vertex Distance near Range)]
+#define VDRf [n-2000(Vertex Distance far Range)]
+#define FLIP [false/true(Flip xUV)]
+#define ROTATE [0-3(Rotate UVs)]
+------
+#moj_import <converter.glsl>
+--Add to end of main in vsh--
+    #moj_import <func.glsl>
+
+-FSH-
+--Remove all declared variables (uniform,in,out)--
+--Add before main in fsh--
+#define FSH
+#moj_import <converter.glsl>
+--Add to end of main in fsh--
+    #moj_import <func.glsl>
+
+-TEXTURE-
+Replace the target texture to reflect with display.png
+
+*Some core shaders are not supported(ex:blit_screen,end_gateway,end_portal)

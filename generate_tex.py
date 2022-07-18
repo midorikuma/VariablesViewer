@@ -1,81 +1,82 @@
 from PIL import Image
-
-#Font Size (1/size)
-fs = 1
+#Texture Name
+texname="display"
+#Texture Size(8<=n<=256)
+ts=(64,64)
 #Digit Width
 dw = 5
-#Font Color (r,g,b,a)
-fc = [255,255,255,255]
+#Font Color (r,g,b)
+fc = (255,255,255)
 
 #Display Characters
-#text("Text",xPos,yPos)
-#variable(DisplayVariableNumber,xSize,ySize)
 #If you want to add variables to display,
 #please add variables here and values.glsl.
-dcsl = [
-    ["Shader Variables",1,1],
-    ["ModelViewMat:",1,2],[0,4,4],
-    ["ProjMat:",1,6],[1,4,4],
-    ["IViewRotMat:",1,10],[2,3,3],
-    ["ColorModulator:",1,14],[3,4,1],
-    ["Light0_Direction:",1,15],[4,3,1],
-    ["Light1_Direction:",1,16],[5,3,1],
-    ["FogStart:",1,17],[6,1,1],
-    ["FogEnd:",1,18],[7,1,1],
-    ["FogColor:",1,19],[8,4,1],
-    ["ScreenSize:",1,20],[9,2,1],
-    ["GameTime:",1,21],[10,1,1],
-    #["Sampler:",1,23],
-    #["0",1,24],[200,20,20],
-    #["1",17,24],[201,10,10],
-    #["2",28,24],[202,10,10],
+# #Display Placement Text
+#xPos,Text + (,VariableId,xSize,ySize)
+display='display.txt'
 
-    #["Text",xPos,yPos],[11,xSize,ySize]
-]
+dcsl = open(display, 'r', encoding='UTF-8').read().splitlines()
+dcsl = [t.split(',,') for t in dcsl]
+dcsl = [[t.split(',') for t in tt] for tt in dcsl]
 
 #unused value
 u=255
 out = Image.new("RGBA", (64, 64), (u,u,u,u))
 
 #main data output
-out.putpixel((0,0), (3,90,3,115))
-out.putpixel((1,0), (fs,dw,0,255))
-out.putpixel((2,0), tuple(fc))
+fr=1
+tsx=ts[0]-1
+tsy=ts[1]-1
+out.putpixel((0,0), (fr,tsx,tsy,u))
+out.putpixel((tsx,0), (fr,tsx,tsy,u))
+out.putpixel((0,tsy), (fr,tsx,tsy,u))
+out.putpixel((tsx,tsy), (fr,tsx,tsy,u))
+
+out.putpixel((1,0), (101,123,145,u))
+out.putpixel((2,0), (dw,u,u,u))
+out.putpixel((3,0), (tuple(fc)))
 
 #convert
 for i in range (0,len(dcsl)):
-    text=dcsl[i][0]
-    if isinstance(text, str):
-        cs = [ord(c) for c in list(text)]
-        #print(cs)
-        ox = dcsl[i][1]
-        oy = dcsl[i][2]+1
-        for j in range (0,len(cs)):
-            #characters data output
-            out.putpixel((ox+j,oy), (255,cs[j],u,u))
-    #variable
-    else:
-        #print(dcsl[i])
-        ox = dcsl[i-1][1]+len(dcsl[i-1][0])
-        oy = dcsl[i-1][2]+1
-        vn = dcsl[i][0]
-        ldx = dcsl[i][1]
-        ldy = dcsl[i][2]
-        if vn<200:
-            for dy in range (0,ldy):
-                y=oy+dy
-                for dx in range (0,ldx):
-                    x=ox+dx*(dw+2)
-                    for di in range (0,dw+1):
-                        out.putpixel((x+di,y), (vn,dx,dy,255-di))
-                    out.putpixel((x+dw+1,y), (255,44,u,u))
-            out.putpixel((ox+ldx*(dw+2)-1,oy+ldy-1), (u,u,u,u))
-        else:
-            for dy in range (0,ldy):
-                y=oy+dy
-                for dx in range (0,ldx):
-                    x=ox+dx
-                    out.putpixel((x,y), (vn,dx,dy,255-max([ldx,ldy])))
+    oy=i+1
+    for j in range (0,len(dcsl[i])):
+        tmp=dcsl[i][j]
+        ox=tmp[0]
+        if ox!='':
+            ox=int(ox)
+            text=tmp[1]
+            cs = [ord(c) for c in list(text)]
+            cs = [39 if n==95 else n for n in cs] #_
+            cs = [n-32 if 97<=n<=122 else n for n in cs] #a-z
+            cs = [n-38 for n in cs]
+            cs = [0 if n<0 or 52<n else n for n in cs] #SP
+            lcs=len(cs)
+            for k in range (0,lcs):
+                #characters data output
+                out.putpixel((ox+k,oy), (255,cs[k],u,u))
+            if 2<len(tmp):
+                ox=ox+lcs
+                vn = int(tmp[2])
+                ldx = int(tmp[3])
+                ldy = int(tmp[4])
+                if vn<200:
+                    for dy in range (0,ldy):
+                        y=oy+dy
+                        for dx in range (0,ldx):
+                            x=ox+dx*(dw+2)
+                            for di in range (0,dw+1):
+                                out.putpixel((x+di,y), (vn,dy*16+dx,di,u))
+                            if dx<ldx-1:
+                                out.putpixel((x+dw+1,y), (255,44-38,u,u))
+                else:
+                    vn=200+(vn-200)*2+1
+                    for dy in range (0,ldy):
+                        y=oy+dy
+                        for dx in range (0,ldx):
+                            x=ox+dx
+                            if dx==dy==0:
+                                out.putpixel((x,y), (vn-1,ldx,ldy,u))
+                            else:
+                                out.putpixel((x,y), (vn,dx,dy,u))
 
-out.save("display.png")
-print("Texture generation complete!")
+out.save(texname+".png")

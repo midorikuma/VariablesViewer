@@ -1,0 +1,13 @@
+-VSH-
+--Add before main in vsh--
+#define VSH
+#moj_import <converter.glsl>
+--Add to end of main in vsh--
+    #moj_import <func.glsl>
+
+-FSH-
+--Add before main in fsh--
+#define FSH
+#moj_import <converter.glsl>
+--Add to end of main in fsh--
+    #moj_import <func.glsl>
