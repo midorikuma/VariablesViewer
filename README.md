@@ -1,6 +1,6 @@
 English | [日本語](https://github.com/midorikuma/VariablesViewer/blob/main/README-ja.md)
 # Resource Packs
-This resource pack allows you to view the variables used in the shaders on the screen.  
+This resource packs allow you to view the variables used in the shaders on the screen.  
 `Vertex Viewer` shows the vertex numbers for each face.  
 `Variables Viewer` allows you to view the values of the variables used in the core shader.   
 Four core shader objects are available to view variables by default.  
