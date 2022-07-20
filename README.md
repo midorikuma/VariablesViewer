@@ -16,8 +16,8 @@ The face number (p) is displayed in the center, and the local vertex numbers 0-3
 The global vertex number (gl_VertexID) of the displayed vertex can also be determined from the following formula.  
 `Global vertex number(gl_VertexID) = Face number(p) * 4 + Local vertex number(c)`  
 
-## Variable Viewer
-The Variable Viewer allows you to see the values of variables used in core shaders.  
+## Variables Viewer
+The Variables Viewer allows you to see the values of variables used in core shaders.  
 ![2022-07-18_23 05 53](https://user-images.githubusercontent.com/39437361/179535868-7936b712-80ab-4bc8-a7ec-1cdf69163f4d.png)
 Four core shader objects are available to view variables by default.  
 ・block_marker particle of wraped_planks  
@@ -35,7 +35,7 @@ See `add.txt` in each resource pack core and existing core shaders for details.
 
 
 ## Changing the display
-Variable Viewer can display characters up to 8-256 characters in height and width.  
+Variables Viewer can display characters up to 8-256 characters in height and width.  
 To change the display, edit `display.txt` and `values.glsl`.  
 This section will show you how to add variables to be displayed.  
   
