@@ -1,32 +1,53 @@
 from PIL import Image
 #Texture Name
-texname="display"
+texname='display'
 #Texture Size(8<=n<=256)
-ts=(64,64)
+#ts=(64,64)
+autots=True
 #Digit Width
 dw = 5
 #Font Color (r,g,b)
 fc = (255,255,255)
 
-#Display Characters
 #If you want to add variables to display,
-#please add variables here and values.glsl.
-# #Display Placement Text
-#xPos,Text + (,VariableId,xSize,ySize)
-display='display.txt'
-
+#please add variables to .txt and values.glsl.
+#Display Text Format
+#xPos,Text + ,VariableId,xSize,ySize
+display= texname + '.txt'
 dcsl = open(display, 'r', encoding='UTF-8').read().splitlines()
 dcsl = [t.split(',,') for t in dcsl]
 dcsl = [[t.split(',') for t in tt] for tt in dcsl]
 
-#unused value
-u=255
-out = Image.new("RGBA", (64, 64), (u,u,u,u))
+#auto setting texture size
+if autots:
+    dlxs=[]
+    dlys=[]
+    for y, tt in enumerate(dcsl):
+        for t in tt:
+            if 1<len(t):
+                dly=y+1
+                dlx=int(t[0])+len(t[1])
+                if 2<len(t):
+                    dly+=int(t[4])-1
+                    if 200<=int(t[2]):
+                        dlx+=int(t[3])
+                    else:
+                        dlx+=int(t[3])*(dw+2)
+                    if int(t[4])<2:
+                        dlx-=1
+                dlys.append(dly+2)
+                dlxs.append(dlx)
+    dl=max(max(dlys),max(dlxs))
+    dl+=(8-dl%8)%8
+    ts=(dl,dl)
 
 #main data output
+u=255
+out = Image.new('RGBA', ts, (u,u,u,u))
 fr=1
 tsx=ts[0]-1
 tsy=ts[1]-1
+
 out.putpixel((0,0), (fr,tsx,tsy,u))
 out.putpixel((tsx,0), (fr,tsx,tsy,u))
 out.putpixel((0,tsy), (fr,tsx,tsy,u))
@@ -79,4 +100,4 @@ for i in range (0,len(dcsl)):
                             else:
                                 out.putpixel((x,y), (vn,dx,dy,u))
 
-out.save(texname+".png")
+out.save(texname+'.png')
