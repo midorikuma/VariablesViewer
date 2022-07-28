@@ -21,10 +21,10 @@ Vertex Viewerでは頂点番号を見ることができます。
 Variables Viewerではcoreシェーダーで使われている変数の値を見ることができます。  
 ![2022-07-18_23 05 53](https://user-images.githubusercontent.com/39437361/179535868-7936b712-80ab-4bc8-a7ec-1cdf69163f4d.png)
 デフォルトで変数を見ることのできるcoreシェーダーの対象物は  
-・歪んだ木材のblock_markerパーティクル  
+・歪んだ板材のblock_markerパーティクル  
 ・豚  
 ・特殊なニンジン付きの棒  
-・歪んだ木材  
+・歪んだ板材 
 の四つとなっています。  
 `get.mcfunction`のコマンドを使用することで対象物の入手、召喚を行うことができます。  
 
