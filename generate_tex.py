@@ -1,6 +1,6 @@
 from PIL import Image
 #Texture Name
-texname='display'
+texname='display_post'
 #Texture Size(8<=n<=256)
 #ts=(64,64)
 autots=True

@@ -8,6 +8,7 @@ Four core shader objects are available to view variables by default.
 ・rendertype_entity_cutout_no_cull  
 ・rendertype_entity_translucent_cull  
 ・rendertype_solid  
+To view the variables used in the post shader, go to Settings>Video Settings>Graphics and select Fabulous setting.  
 
 ## Vertex Viewer
 The Vertex Viewer allows you to see the vertex numbers.  

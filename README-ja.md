@@ -1,14 +1,16 @@
 日本語 | [English](https://github.com/midorikuma/VariablesViewer/blob/main/README.md)
 # リソースパック
-coreシェーダーで使われている変数を画面上に表示することができます。  
+シェーダーで使われている変数を画面上に表示することができます。  
 `Vertex Viewer`では各面の頂点番号を  
-`Variables Viewer`ではcoreシェーダー内で使われている変数の値を表示することができます。  
+`Variables Viewer`ではシェーダー内で使われている変数の値を表示することができます。  
 デフォルトで変数を見ることのできるcoreシェーダーの対象物は  
 ・particle：パーティクル  
 ・rendertype_entity_cutout_no_cull：エンティティ  
 ・rendertype_entity_translucent_cull：一部透過アイテム  
 ・rendertype_solid：非透過ブロック  
 の四種類となっています。  
+postシェーダーで使われている変数を表示するには  
+設定>ビデオ設定>グラフィックスから最高設定を選択して下さい。  
 
 ## Vertex Viewer
 Vertex Viewerでは頂点番号を見ることができます。  

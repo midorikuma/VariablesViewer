@@ -99,7 +99,7 @@ a = ivec2(load_color(Sampler0, texCoord0, texsize, floor(tpos) - col.gb).gb);
 if(type < 200) {
 //Character
 int n = (vn == 255) ? int(col.g) : convert_asciin(type, vs);
-fragColor = vec4(dcfc, convert_character(Sampler0, texCoord0, n));
+fragColor = vec4(dcfc/255.0, convert_character(Sampler0, texCoord0, n));
 } else {
 //Picture
 fragColor = vs;
