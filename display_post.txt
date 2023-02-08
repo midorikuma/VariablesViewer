@@ -7,3 +7,4 @@
 1,OutSize:,3,2,1
 1,Time:,4,1,1
 1,ScreenSize:,5,2,1
+1,Sampler:,200,20,20

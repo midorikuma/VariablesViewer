@@ -68,28 +68,51 @@ float convert_character(sampler2D Sampler, vec2 texCoord, int n) {
     float nval = mod(float(dots[n]), exp2(j + 1));
     return pd ? floor(nval / exp2(j)) : 0;
 }
+vec4 convert_picture(sampler2D Sampler, vec2 texCoord, vec2 p, vec2 pl) {
+    vec2 tpos = p + mod(texCoord, 1.0);
+    tpos/=pl;
+    vec2 tsize=textureSize(Sampler, 0);
+    tpos*=max(tsize.x,tsize.y)/tsize;
+    tpos.y=1.0-tpos.y;
+    vec4 col = texture(Sampler,tpos);
+    if (1.0<tpos.x||tpos.y<0.0) col.a=0.0;
+    return col;
+}
 
 
 void main() {
     vec4 ScaledTexel = texture2D(DiffuseSampler, texCoord);
     vec2 size = min(ScreenSize.x,ScreenSize.y)/ScreenSize;
-    vec2 texCoord0 = (vec2(texCoord.x*2.0,1.0)-texCoord)/size;
+    vec2 texCoord0 = vec2(texCoord.x,1.0-texCoord.y)/size;
     vec4 col = texture2D(InputSampler, texCoord0) * 255.0;
     vec4 sizecol = texture(InputSampler, vec2(0, 0)) * 255.0;
-    vec2 texsize = sizecol.gb + 1.001;
+    vec2 texsize = sizecol.gb + 1.0;
     vec2 tpos = texCoord0*texsize;
     if(col.rgb != vec3(255.0) && texCoord.x<size.x && 1.01 < tpos.y && tpos.y<texsize.y-1.01){
         vec3 dcfs = texture(InputSampler, vec2(2.01, 0.0)/texsize).rgb*255.0;
         vec3 dcfc = texture(InputSampler, vec2(3.01, 0.0)/texsize).rgb;
         int vn = int(col.r);
         int type;
-        int vFloat = 0;
-        int vInt = 1;
+        int vFloat=0;
+        int vInt=1;
+        int vPicture=200;
         vec4 vs;
         ivec2 a;
-        vs.y = col.b;
-        vs.z = dcfs.r;
-        a = ivec2(int(col.g) % 16, col.g / 16);
+        if(vn < 200) {
+            //Assign Digit and Digit Length
+            vs.y = col.b;
+            vs.z = dcfs.r;
+            a = ivec2(int(col.g) % 16, col.g / 16);
+        } else if(vn % 2 == 0) {
+            vn = 200 + (vn - 200) / 2;
+            a = ivec2(col.gb);
+            col.gb = vec2(0.0);
+        } else if(vn != 255) {
+            vn = 200 + (vn - 200 - 1) / 2;
+            //ここでサイズや座標など設定
+            //a = ivec2(texture(InputSampler, floor(tpos) - col.gb).gb);
+            a = ivec2(texture(InputSampler, (floor(tpos)-col.gb+0.01)/texsize).gb*255.0);
+        }
         switch(vn) {
             case 1 : vs.x = ProjMat[a.y][a.x];
             type = vFloat;
@@ -106,9 +129,18 @@ void main() {
             case 5 : vs.x = ScreenSize[a.x];
             type = vInt;
             break;
+            case 200 : vs = convert_picture(DiffuseSampler, tpos, col.gb, a);
+            type = vPicture;
+            break;
         }
-        int n = (vn == 255) ? int(col.g) : convert_asciin(type, vs);
-        fragColor = vec4(dcfc, convert_character(InputSampler, texCoord0, n));
+        if(type < 200) {
+            //Character
+            int n = (vn == 255) ? int(col.g) : convert_asciin(type, vs);
+            fragColor = vec4(dcfc, convert_character(InputSampler, texCoord0, n));
+        } else {
+            //Picture
+            fragColor = vs;
+        }
         if(fragColor.a==0.0) fragColor = ScaledTexel;
     }else{
         fragColor = ScaledTexel;
