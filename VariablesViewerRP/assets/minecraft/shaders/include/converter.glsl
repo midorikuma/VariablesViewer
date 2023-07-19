@@ -116,13 +116,13 @@ vec3 load_color(sampler2D Sampler0, vec2 texCoord0, vec2 texsize, vec2 pos) {
     return texture(Sampler0, tpos / sampsize).rgb * 255.0;
 }
 
-//Convert(col -> Picture Pixels)
-vec4 convert_picture(sampler2D Sampler, vec2 texCoord0, vec2 p, vec2 pl) {
+//Convert(col -> Texture Pixels)
+vec4 convert_texture(sampler2D Sampler, vec2 texCoord0, vec2 p, vec2 pl) {
     vec2 tpos = p + mod(texCoord0 * textureSize(Sampler, 0), 1.0);
     return texture(Sampler, vec2(tpos / pl));
 }
 
-//Convert(col -> Picture Pixels)
+//Convert(col -> Texture Pixels)
 bool convert_uvpos(sampler2D Sampler0, vec2 texCoord0, vec2 outUV, vec2 p, vec2 pl) {
     vec2 tpos = (p + mod(texCoord0 * textureSize(Sampler0, 0), 1.0)) / pl;
     bool f1 = outUV.x / (16 * 16) < tpos.x && outUV.y / (16 * 16) < tpos.y;

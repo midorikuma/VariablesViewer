@@ -1,6 +1,6 @@
 {
   "textures": {
-    "display": "display/display"
+    "display": "item/display"
   },
   "elements": [
     {

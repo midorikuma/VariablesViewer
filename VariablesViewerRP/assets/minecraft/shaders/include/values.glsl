@@ -108,14 +108,14 @@ break;
 //type = (vFloat,vInt);
 //break;
 
-//samplers(vn:200-254,type:vPicture)
-case 200 : vs = convert_picture(Sampler0, texCoord0, col.gb, a);
-type = vPicture;
+//samplers(vn:200-254,type:vTexture)
+case 200 : vs = convert_texture(Sampler0, texCoord0, col.gb, a);
+type = vTexture;
 break;
-case 201 : vs = convert_uvpos(Sampler0, texCoord0, outUV1, col.gb, a) ? vec4(0.0, 0.0, 0.0, 1.0) : convert_picture(Sampler1, texCoord0, col.gb, a);
-type = vPicture;
+case 201 : vs = convert_uvpos(Sampler0, texCoord0, outUV1, col.gb, a) ? vec4(0.0, 0.0, 0.0, 1.0) : convert_texture(Sampler1, texCoord0, col.gb, a);
+type = vTexture;
 break;
-case 202 : vs = convert_uvpos(Sampler0, texCoord0, outUV2, col.gb, a) ? vec4(0.0, 0.0, 0.0, 1.0) : convert_picture(Sampler2, texCoord0, col.gb, a);
-type = vPicture;
+case 202 : vs = convert_uvpos(Sampler0, texCoord0, outUV2, col.gb, a) ? vec4(0.0, 0.0, 0.0, 1.0) : convert_texture(Sampler2, texCoord0, col.gb, a);
+type = vTexture;
 break;
 }
